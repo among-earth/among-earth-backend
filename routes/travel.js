@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
-var multer  = require('multer');
-var upload = multer();
-var AWS = require("aws-sdk");
-const Jimp = require('jimp');
-const Minio = require('minio');
+const multer  = require('multer');
+const upload = multer();
+const AWS = require("aws-sdk");
+
 AWS.config.region = 'ap-northeast-2';
 
 router.get('/', async (req, res, next) => {
