@@ -1,6 +1,5 @@
 const express = require('express');
 
-const userRouter = require('./routes/user');
 const directionsRouter = require('./routes/directions');
 const travelRouter = require('./routes/travel');
 
@@ -10,7 +9,6 @@ const app = express();
 
 initLoaders(app);
 
-app.use('/user', userRouter);
 app.use('/directions', directionsRouter);
 app.use('/travels', travelRouter);
 

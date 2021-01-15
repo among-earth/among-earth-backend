@@ -1,8 +1,9 @@
 const express = require('express');
-const router = express.Router();
 const multer  = require('multer');
-const upload = multer();
 const AWS = require("aws-sdk");
+
+const router = express.Router();
+const upload = multer();
 
 AWS.config.region = 'ap-northeast-2';
 
