@@ -2,7 +2,7 @@ require('dotenv').config();
 
 module.exports = {
   corsOptions: {
-    origin: 'http://localhost:3000',
+    origin: 'https://among-earth.site',
     optionsSuccessStatus: 200,
   },
 };
