@@ -1,6 +1,6 @@
 const express = require('express');
-const multer  = require('multer');
-const AWS = require("aws-sdk");
+const multer = require('multer');
+const AWS = require('aws-sdk');
 
 const router = express.Router();
 const upload = multer();
@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
       try {
         let list = [];
 
-        for(let i = 0; i < data.Contents.length; i++) {
+        for (let i = 0; i < data.Contents.length; i++) {
           const { Key, LastModified } = data.Contents[i];
 
           const imageInfo = { path: Key, time: LastModified };
@@ -28,11 +28,11 @@ router.get('/', async (req, res, next) => {
 
         res.status(200).send(list);
       } catch (err) {
-        console.log(err);
+        next(err);
       }
     });
-  } catch(err) {
-    console.log(err);
+  } catch (err) {
+    next(err);
   }
 });
 
@@ -45,7 +45,7 @@ router.post('/:travel_id', upload.single('travelImage'), async (req, res, next) 
     const s3bucket = new AWS.S3({
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      region: process.env.AWS_REGION
+      region: process.env.AWS_REGION,
     });
 
     const params = {
@@ -56,24 +56,23 @@ router.post('/:travel_id', upload.single('travelImage'), async (req, res, next) 
       ACL: 'public-read',
     };
 
-    s3bucket.upload(params, async (err, data) => {
-      try {
-        if(err) console.log(err);
-
-        const newFileUploaded = {
-          description: info.points,
-          se_key: params.Key,
-        };
-
-        info = { ...info, photo: newFileUploaded};
-
-        res.status(200).send(info);
-      } catch(err) {
-        console.log(err);
+    s3bucket.upload(params, (err, data) => {
+      if (err) {
+        console.log(`image upload err : ${err}`);
+        return;
       }
+
+      const newFileUploaded = {
+        description: info.points,
+        se_key: params.Key,
+      };
+
+      info = { ...info, photo: newFileUploaded };
     });
-  } catch(err) {
-    console.log(err);
+
+    res.status(200).send(info);
+  } catch (err) {
+    next(err);
   }
 });
 
