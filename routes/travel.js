@@ -5,7 +5,6 @@ const router = express.Router();
 const upload = multer();
 
 const travelsController = require('./controllers/travel.controller');
-const PHOTO_NAME = require('../configs/constants');
 const { ROUTE, PHOTO } = require('../configs/constants');
 
 router.get(ROUTE.DEFAULT, travelsController.getPhotoLists);
