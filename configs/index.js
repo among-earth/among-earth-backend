@@ -2,10 +2,7 @@ require('dotenv').config();
 
 module.exports = {
   corsOptions: {
-    origin:
-      process.env.NODE_ENV === 'production' ?
-      'https://www.among-earth.site' :
-      'https://localhost:3000',
+    origin: 'https://www.among-earth.site',
     optionsSuccessStatus: 200,
   },
 };
