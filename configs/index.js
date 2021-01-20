@@ -5,7 +5,7 @@ module.exports = {
     origin:
       process.env.NODE_ENV === 'production' ?
       'https://www.among-earth.site' :
-      'http://localhost:443',
+      'http://localhost:3000',
     optionsSuccessStatus: 200,
   },
 };
