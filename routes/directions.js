@@ -11,7 +11,7 @@ router.get('/', async (req, res, next) => {
   const bounds = 500;
 
   try {
-    const response = await axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?type=tourist_attraction&location=${lat},${lng}&radius=${bounds}&key=AIzaSyDbRTVExbnqlexkB6Z8w9Sym3KcR2_1PKY`);
+    const response = await axios.get(`${GOOGLE.defaultUrl}&location=${lat},${lng}&radius=${bounds}&key=${googleOptions.key}`);
     const results = response.data.results;
 
     for (let i = 0; i < results.length; i++) {
