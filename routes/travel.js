@@ -6,7 +6,6 @@ const router = express.Router();
 const upload = multer();
 
 const { awsOptions } = require('../configs');
-const { listPhotos } = require('../utils/listPhotos');
 
 AWS.config.region = awsOptions.region;
 
@@ -34,9 +33,6 @@ router.get('/', async (req, res, next) => {
         next(err);
       }
     });
-    // const photoList = await listPhotos();
-
-    // res.status(200).send(photoList);
   } catch (err) {
     next(err);
   }
