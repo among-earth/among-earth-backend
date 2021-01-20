@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
   const bounds = 500;
 
   try {
-    const response = await axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${bounds}&type=tourist_attraction&key=${process.env.GOOGLE_API_KEY}`);
+    const response = await axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${bounds}&type=tourist_attraction&key=AIzaSyDbRTVExbnqlexkB6Z8w9Sym3KcR2_1PKY`);
     const results = response.data.results;
 
     if(process.env.NODE_ENV === 'production') console.log(response);
