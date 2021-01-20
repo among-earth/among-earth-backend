@@ -5,14 +5,16 @@ const AWS = require('aws-sdk');
 const router = express.Router();
 const upload = multer();
 
-AWS.config.region = 'ap-northeast-2';
+const { awsOptions } = require('../configs');
+
+AWS.config.region = awsOptions.region;
 
 router.get('/', async (req, res, next) => {
   try {
     const s3 = new AWS.S3();
 
     const params = {
-      Bucket: process.env.AWS_BUCKET_NAME,
+      Bucket: awsOptions.bucket,
     };
 
     s3.listObjectsV2(params, async (err, data) => {
@@ -43,13 +45,13 @@ router.post('/:travel_id', upload.single('travelImage'), async (req, res, next) 
     const image = req.file;
 
     const s3bucket = new AWS.S3({
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      region: process.env.AWS_REGION,
+      accessKeyId: awsOptions.accessKeyId,
+      secretAccessKey: awsOptions.secretAccessKey,
+      region: awsOptions.region,
     });
 
     const params = {
-      Bucket: process.env.AWS_BUCKET_NAME,
+      Bucket: awsOptions.bucket,
       Key: image.originalname,
       Body: image.buffer,
       ContentType: image.mimetype,

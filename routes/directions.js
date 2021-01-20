@@ -3,15 +3,16 @@ const router = express.Router();
 
 const axios = require('axios');
 
+const { GOOGLE } = require('../configs/constants');
+const { googleOptions } = require('../configs');
+
 router.get('/', async (req, res, next) => {
   const { lat, lng, id } = req.query;
   const bounds = 500;
 
   try {
-    const response = await axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${bounds}&type=tourist_attraction&key=AIzaSyDbRTVExbnqlexkB6Z8w9Sym3KcR2_1PKY`);
+    const response = await axios.get(`${GOOGLE.defaultUrl}&location=${lat},${lng}&radius=${bounds}&key=${googleOptions.key}`);
     const results = response.data.results;
-
-    if(process.env.NODE_ENV === 'production') console.log(response);
 
     for (let i = 0; i < results.length; i++) {
       const { place_id } = results[i];

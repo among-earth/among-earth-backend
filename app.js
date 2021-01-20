@@ -3,6 +3,7 @@ const createError = require('http-errors');
 
 const directionsRouter = require('./routes/directions');
 const travelRouter = require('./routes/travel');
+const { ROUTE } = require('./configs/constants');
 
 const initLoaders = require('./loaders');
 
@@ -10,8 +11,8 @@ const app = express();
 
 initLoaders(app);
 
-app.use('/directions', directionsRouter);
-app.use('/travels', travelRouter);
+app.use(ROUTE.DIRECTIONS, directionsRouter);
+app.use(ROUTE.TRAVELS, travelRouter);
 
 app.use((req, res, next) => {
   next(createError(404));
