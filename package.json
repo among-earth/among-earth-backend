@@ -2,12 +2,14 @@
   "name": "among-earth-backend",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node" : "12.18.3"
+  },
   "scripts": {
-    "dev": "NODE_ENV=development nodemon app.js",
     "start": "NODE_ENV=production node app.js",
+    "dev": "NODE_ENV=development nodemon app.js",
     "test": "mocha spec"
   },
-  "engines": { "node" : "12.16.1" },
   "dependencies": {
     "aws-sdk": "^2.813.0",
     "axios": "^0.21.0",
