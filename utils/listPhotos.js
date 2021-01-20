@@ -10,21 +10,20 @@ exports.listPhotos = () => {
   const params = {
     Bucket: awsOptions.bucket,
   };
+  let list = [];
 
   s3.listObjectsV2(params, async (err, data) => {
     try {
-      let list = [];
-
       for (let i = 0; i < data.Contents.length; i++) {
         const { Key, LastModified } = data.Contents[i];
 
         const imageInfo = { path: Key, time: LastModified };
         list.push(imageInfo);
       }
-
-      return list;
     } catch (err) {
       console.error(err.message);
     }
   });
+
+  return list;
 };
