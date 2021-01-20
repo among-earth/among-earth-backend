@@ -6,33 +6,37 @@ const router = express.Router();
 const upload = multer();
 
 const { awsOptions } = require('../configs');
+const { listPhotos } = require('../utils/listPhotos');
 
 AWS.config.region = awsOptions.region;
 
 router.get('/', async (req, res, next) => {
   try {
-    const s3 = new AWS.S3();
+    // const s3 = new AWS.S3();
 
-    const params = {
-      Bucket: awsOptions.bucket,
-    };
+    // const params = {
+    //   Bucket: awsOptions.bucket,
+    // };
 
-    s3.listObjectsV2(params, async (err, data) => {
-      try {
-        let list = [];
+    // s3.listObjectsV2(params, async (err, data) => {
+    //   try {
+    //     let list = [];
 
-        for (let i = 0; i < data.Contents.length; i++) {
-          const { Key, LastModified } = data.Contents[i];
+    //     for (let i = 0; i < data.Contents.length; i++) {
+    //       const { Key, LastModified } = data.Contents[i];
 
-          const imageInfo = { path: Key, time: LastModified };
-          list.push(imageInfo);
-        }
+    //       const imageInfo = { path: Key, time: LastModified };
+    //       list.push(imageInfo);
+    //     }
 
-        res.status(200).send(list);
-      } catch (err) {
-        next(err);
-      }
-    });
+    //     res.status(200).send(list);
+    //   } catch (err) {
+    //     next(err);
+    //   }
+    // });
+    const photoList = await listPhotos();
+
+    res.status(200).send(photoList);
   } catch (err) {
     next(err);
   }
