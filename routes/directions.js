@@ -1,31 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const axios = require('axios');
+const directionsController = require('./controllers/directions.controller');
+const { ROUTE } = require('../configs/constants');
 
-const { GOOGLE } = require('../configs/constants');
-const { googleOptions } = require('../configs');
-
-router.get('/', async (req, res, next) => {
-  const { lat, lng, id } = req.query;
-  const bounds = 500;
-
-  try {
-    const response = await axios.get(`${GOOGLE.defaultUrl}&location=${lat},${lng}&radius=${bounds}&key=${googleOptions.key}`);
-    const results = response.data.results;
-
-    for (let i = 0; i < results.length; i++) {
-      const { place_id } = results[i];
-
-      if (place_id === id) results.splice(i, 1);
-    }
-
-    const recommends = results.splice(0, 6);
-
-    return res.status(200).json(recommends);
-  } catch (err) {
-    next(err);
-  }
-});
+router.get(ROUTE.DEFAULT, directionsController.getNearestPlaces);
 
 module.exports = router;
